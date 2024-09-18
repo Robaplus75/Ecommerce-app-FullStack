@@ -1,11 +1,22 @@
-import React from 'react'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Container from './components/Container'
+import Home from "./pages/Home"
+
+const router = createBrowserRouter([
+  {
+    element: <Container />,
+    children:[
+      {
+        path: "/",
+        element: <Home />
+      }
+    ]
+  },
+]);
+
 
 function App() {
-  return (
-    <div>
-      <h1>Yoo</h1>
-    </div>
-    )
+  return (<RouterProvider router={router} />)
 }
 
 export default App
