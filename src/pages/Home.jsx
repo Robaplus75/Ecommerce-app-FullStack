@@ -1,5 +1,6 @@
 import {Categories} from '../assets/mockData'
 import HeroImage from '../assets/Images/hero-page.png'
+import InfoSection from '../components/infoSection'
 
 export default function Home(){
 	return (
@@ -26,6 +27,7 @@ export default function Home(){
 							</div>
 						</div>
 				</div>
+				<InfoSection />
 			</div>
 		)
 }
