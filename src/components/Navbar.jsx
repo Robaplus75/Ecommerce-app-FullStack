@@ -2,8 +2,10 @@ import {Link} from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { ShoppingCart } from 'lucide-react';
 import { User } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 export default function Navbar(){
+	const products = useSelector((store)=>store.cart.products)
 	return (
 		<nav className="bg-white-500 shadow-md">
 			<div className="container px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
@@ -17,8 +19,11 @@ export default function Navbar(){
 					</form>
 				</div>
 				<div className="flex items-center space-x-4">
-					<Link to="/cart">
+					<Link to="/cart" className="relative">
 						<ShoppingCart className="text-lg"/>
+						{products.length > 0 && (
+							<span className="absolute top-0 text-xs w-3 left-5 bg-red-600 rounded-full flex justify-center items-center text-white">{products.length}</span>
+						)}
 					</Link>
 					<button className="hidden md:block">
 						Login | Register
