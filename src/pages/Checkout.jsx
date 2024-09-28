@@ -1,6 +1,9 @@
 import {FaAngleUp, FaAngleDown} from 'react-icons/fa'
 import {useState} from 'react'
 import {useSelector} from 'react-redux'
+import {setOrder} from '../redux/orderSlice'
+import {useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 
 export default function Checkout(){
 	const [billingToggle, setBillingToggle] = useState(true)
@@ -13,6 +16,19 @@ export default function Checkout(){
 		zip: ''
 	})
 	const cart = useSelector(store=>store.cart)
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+	const handleOrder = ()=>{
+		const newOrder = {
+			products: cart.products,
+			orderNumber: "12344",
+			shippingInformation: shippingInfo,
+			totalPrice: cart.totalPrice,
+		}
+		dispatch(setOrder(newOrder))
+		navigate('/order-confirmation')
+	}
 
 	return (
 		<div className="container mx-auto py-8 min-h-96 px-4 md:px-16 lg:px-24">
@@ -144,7 +160,7 @@ export default function Checkout(){
 							<span className="font-semibold">${cart.totalPrice.toFixed(2)}</span>
 						</div>
 					</div>
-					<button className="w-full bg-red-600 text-white py-2 mt-6 hover:bg-red-800">Place Order</button>
+					<button onClick={handleOrder} className="w-full bg-red-600 text-white py-2 mt-6 hover:bg-red-800">Place Order</button>
 				</div>
 			</div>
 		</div>
