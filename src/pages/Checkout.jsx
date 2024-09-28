@@ -7,6 +7,11 @@ export default function Checkout(){
 	const [shippingToggle, setShippingToggle] = useState(false)
 	const [paymentToggle, setPaymentToggle] = useState(false)
 	const [paymentMethod, setPaymentMethod] = useState('delivery')
+	const [shippingInfo, setShippingInfo] = useState({
+		address: '',
+		city: '',
+		zip: ''
+	})
 	const cart = useSelector(store=>store.cart)
 
 	return (
@@ -49,19 +54,19 @@ export default function Checkout(){
 							<div>
 								<div className="block text-gray-700">
 									<label htmlFor="">Address</label>
-									<input type='text' name="address" placeholder="Enter Address" className="w-full px-3 py-2 border" />
+									<input type='text' name="address" placeholder="Enter Address" onChange={(e)=>setShippingInfo({...shippingInfo, address: e.target.value})} className="w-full px-3 py-2 border" />
 								</div>
 							</div>
 							<div>
 								<div className="block text-gray-700">
 									<label htmlFor="">City</label>
-									<input type='text' name="city" placeholder="Enter City" className="w-full px-3 py-2 border" />
+									<input type='text' name="city" placeholder="Enter City" onChange={(e)=>setShippingInfo({...shippingInfo, city: e.target.value})} className="w-full px-3 py-2 border" />
 								</div>
 							</div>
 							<div>
 								<div className="block text-gray-700">
 									<label htmlFor="">Zip Code</label>
-									<input type='text' name="zipcode" placeholder="Enter Zip Code" className="w-full px-3 py-2 border" />
+									<input type='text' name="zipcode" placeholder="Enter Zip Code" onChange={(e)=>setShippingInfo({...shippingInfo, zip: e.target.value})} className="w-full px-3 py-2 border" />
 								</div>
 							</div>
 						</div>
