@@ -6,6 +6,7 @@ import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import Order from "./pages/Order"
 import FilterData from "./pages/FilterData"
+import ProductDetail from "./pages/ProductDetail"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path:"/filter-data",
         element: <FilterData />,
+      },
+      {
+        path:"/product/:id",
+        element:<ProductDetail />
       }
     ]
   },
