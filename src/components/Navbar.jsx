@@ -7,11 +7,26 @@ import Modal from './Modal'
 import Login from './Login'
 import Register from './Register'
 import { useState } from 'react'
+import {useDispatch} from 'react-redux'
+import {setSearchTerm} from '../redux/productSlice'
+import {useNavigate} from 'react-router-dom'
 
 export default function Navbar(){
 	const products = useSelector((store)=>store.cart.products)
 	const [isModelOpen, setIsModelOpen] = useState(false)
 	const [isLogin, setIsLogin] = useState(true)
+	const [search, setSearch] = useState('')
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+
+	const handleSearch = (e) =>{
+		e.preventDefault()
+		dispatch(setSearchTerm(search))
+		navigate('/filter-data')
+
+	}
+
 	return (
 		<nav className="bg-white-500 shadow-md">
 			<div className="container px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
@@ -19,8 +34,8 @@ export default function Navbar(){
 					<Link to="/">e-SHOP</Link>
 				</div>
 				<div className="relative flex-1 mx-4">
-					<form>
-						<input type="text" placeholder="Search Product" className="w-full border py-2 px-4"/>
+					<form onSubmit={handleSearch}>
+						<input type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Search Product" className="w-full border py-2 px-4"/>
 						<Search className="absolute top-3 right-3 text-red-500" />
 					</form>
 				</div>
