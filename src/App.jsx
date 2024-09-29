@@ -5,6 +5,7 @@ import Shop from "./pages/Shop"
 import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import Order from "./pages/Order"
+import FilterData from "./pages/FilterData"
 
 const router = createBrowserRouter([
   {
@@ -27,8 +28,12 @@ const router = createBrowserRouter([
         element: <Checkout />
       },
       {
-        path:"order-confirmation",
+        path:"/order-confirmation",
         element: <Order />,
+      },
+      {
+        path:"/filter-data",
+        element: <FilterData />,
       }
     ]
   },
