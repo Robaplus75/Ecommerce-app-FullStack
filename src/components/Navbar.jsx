@@ -3,9 +3,15 @@ import { Search } from 'lucide-react';
 import { ShoppingCart } from 'lucide-react';
 import { User } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import Modal from './Modal'
+import Login from './Login'
+import Register from './Register'
+import { useState } from 'react'
 
 export default function Navbar(){
 	const products = useSelector((store)=>store.cart.products)
+	const [isModelOpen, setIsModelOpen] = useState(false)
+	const [isLogin, setIsLogin] = useState(true)
 	return (
 		<nav className="bg-white-500 shadow-md">
 			<div className="container px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
@@ -25,10 +31,10 @@ export default function Navbar(){
 							<span className="absolute top-0 text-xs w-3 left-5 bg-red-600 rounded-full flex justify-center items-center text-white">{products.length}</span>
 						)}
 					</Link>
-					<button className="hidden md:block">
+					<button onClick={()=>setIsModelOpen(true)} className="hidden md:block">
 						Login | Register
 					</button>
-					<button className="block md:hidden">
+					<button onClick={()=>setIsModelOpen(true)} className="block md:hidden">
 						<User />
 					</button>
 				</div>
@@ -39,6 +45,9 @@ export default function Navbar(){
 				<Link to="/" className="hover:underline">Contact</Link>
 				<Link to="/" className="hover:underline">About</Link>
 			</div>
+			<Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen} >
+				{isLogin ? <Login setIsLogin={setIsLogin} /> : <Register  setIsLogin={setIsLogin}/>}
+			</Modal>
 		</nav>
 	)
 }
