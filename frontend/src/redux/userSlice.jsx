@@ -14,6 +14,20 @@ export const loginUser = createAsyncThunk("LoginUser", async (userData)=>{
 	return response.data
 })
 
+export const signupUser = createAsyncThunk("SignupUser", async (userData)=>{
+	try{
+		const response = await api.post("/accounts/", userData)
+		return response.data
+	}catch(err){
+		if (err.response){
+			return rejectWithValue(err.response)
+		}else{
+			return rejectWithValue({'detail': "Something Went Wrong"})
+		}
+	}
+	return response.data
+})
+
 const userSlice = createSlice({
 	name: "User",
 	initialState,
@@ -30,6 +44,19 @@ const userSlice = createSlice({
 		builder.addCase(loginUser.rejected, (state, action)=>{
 			state.error = true
 			state.status = {'detail':'Wrong Email or Password'}
+			state.isLoading = false
+		});
+
+		builder.addCase(signupUser.pending, (state, action)=>{
+			state.isLoading = true
+		});
+		builder.addCase(signupUser.fulfilled, (state, action)=>{
+			state.isLoading = false
+		});
+		builder.addCase(signupUser.rejected, (state, action)=>{
+			state.error = true
+			state.status = {'detail':'User Creation Failed'}
+			console.log(action.error.response)
 			state.isLoading = false
 		});
 	}

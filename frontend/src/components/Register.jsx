@@ -1,19 +1,54 @@
-export default function Register({setIsLogin}){
+import toast from 'react-hot-toast'
+import {useDispatch, useSelector} from 'react-redux'
+import {signupUser} from '../redux/userSlice'
+
+export default function Register({setIsLogin, setIsModelOpen}){
+	const dispatch = useDispatch()
+	const isLoading = useSelector(store=>store.user.isLoading)
+
+	async function handleSubmit(e){
+		e.preventDefault()
+		const formData = new FormData(e.target)
+		const userData = {
+			'email': formData.get('email'),
+			'first_name': formData.get('name'),
+			'password': formData.get('password')
+		}
+
+		if (formData.get("password") === formData.get("c_password")){
+			const response = await dispatch(signupUser(userData))
+			if (response.type === "SignupUser/fulfilled"){
+				toast.success('Registration Successful!')
+				setIsLogin(true)
+			}else{
+				toast.error("Registration Failed. Please Try again")
+			}
+		}else{
+			toast.error("Passwords do not Match")
+		}
+	}
+
+	if (isLoading){return <h1>Loading</h1>}
+
 	return (
 		<div>
 			<h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-			<form>
+			<form onSubmit={(e)=>handleSubmit(e)}>
 				<div className="mb-4">
 					<label className="block text-gray-700">Name</label>
-					<input className="w-full px-3 py-2 border" type="text" placeholder="Enter Name" />
+					<input className="w-full px-3 py-2 border" name="name" type="text" placeholder="Enter Name" />
 				</div>
 				<div className="mb-4">
 					<label className="block text-gray-700">Email</label>
-					<input className="w-full px-3 py-2 border" type="email" placeholder="Enter Email" />
+					<input className="w-full px-3 py-2 border" name="email" type="email" placeholder="Enter Email" />
 				</div>
 				<div className="mb-4">
 					<label className="block text-gray-700">Password</label>
-					<input className="w-full px-3 py-2 border" type="password" />
+					<input className="w-full px-3 py-2 border" name="password" type="password" placeholder="Password"/>
+				</div>
+				<div className="mb-4">
+					<label className="block text-gray-700">Confirm Password</label>
+					<input className="w-full px-3 py-2 border" name="c_password" type="password" placeholder="Confirm Password"/>
 				</div>
 				<div className="mb-4">
 					<button type="submit" className="w-full bg-red-600 text-white py-2">Sign Up</button>
