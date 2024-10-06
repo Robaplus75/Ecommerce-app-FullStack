@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {loginUser} from "../redux/userSlice"
 import {useState} from 'react'
+import toast from 'react-hot-toast'
 
 
 export default function Login({setIsLogin, setIsModelOpen}){
@@ -19,7 +20,10 @@ export default function Login({setIsLogin, setIsModelOpen}){
 		const res =  await dispatch(loginUser(userData))
 		console.log(res)
 		if (res.type === "LoginUser/fulfilled"){
+			toast.success('Login Successful!')
 			setIsModelOpen(false)
+		}else{
+			toast.error("Login Failed. Please Try again")
 		}
 		
 	}
