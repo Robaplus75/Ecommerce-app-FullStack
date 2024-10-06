@@ -2,7 +2,7 @@ import {Categories} from '../assets/mockData'
 import HeroImage from '../assets/Images/hero-page.png'
 import InfoSection from '../components/infoSection'
 import CategorySection from '../components/CategorySection'
-import {setProducts} from '../redux/productSlice'
+import {setProducts, getProducts} from '../redux/productSlice'
 import {useSelector, useDispatch} from 'react-redux'
 import {useEffect} from 'react'
 import {mockData} from '../assets/mockData'
@@ -13,8 +13,12 @@ export default function Home(){
 	const dispatch = useDispatch()
 	const products = useSelector(state => state.product)
 
+	async function fetchProducts(){
+		const res = await dispatch(getProducts())
+	}
+
 	useEffect(()=>{
-		dispatch(setProducts(mockData))
+		fetchProducts()
 	},[])
 
 	return (
