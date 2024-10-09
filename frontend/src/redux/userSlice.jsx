@@ -3,7 +3,7 @@ import {api, api_auth} from './api'
 
 const initialState = {
 	isLoggedin: false,
-	logged_user: {},
+	logged_user: null,
 	isLoading: false,
 	error: false,
 }
@@ -38,7 +38,13 @@ export const getUser = createAsyncThunk("GetUser", async (userData, thunkAPI)=>{
 const userSlice = createSlice({
 	name: "User",
 	initialState,
-
+	reducers: {
+		logout(state, action){
+			state.isLoggedin = false
+			state.logged_user = null
+			localStorage.setItem('auth_tokens', '')
+		}
+	},
 	extraReducers: (builder)=>{
 
 		// ----------Login User
@@ -89,5 +95,5 @@ const userSlice = createSlice({
 		});
 	}
 })
-
+export const {logout} = userSlice.actions
 export default userSlice.reducer
