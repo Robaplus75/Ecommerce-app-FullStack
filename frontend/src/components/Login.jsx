@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux'
-import {loginUser} from "../redux/userSlice"
+import {loginUser, getUser} from "../redux/userSlice"
 import {useState} from 'react'
 import toast from 'react-hot-toast'
 
@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 export default function Login({setIsLogin, setIsModelOpen}){
 	const dispatch = useDispatch()
 	const isLoading = useSelector(store=>store.user.isLoading)
+	const logged_user = useSelector(store=>store.user.logged_user)
 
 
 	async function handleSubmit(e){
@@ -17,13 +18,18 @@ export default function Login({setIsLogin, setIsModelOpen}){
 			password: formData.get("password")
 		}
 		console.log(userData)
-		const res =  await dispatch(loginUser(userData))
-		console.log(res)
-		if (res.type === "LoginUser/fulfilled"){
+		const login_res =  await dispatch(loginUser(userData))
+		console.log("Login Response", login_res)
+		const user_res = await dispatch(getUser({"email": userData.email}))
+		console.log("User Response", user_res)
+		console.log("Logged User", logged_user)
+
+		if (login_res.type === "LoginUser/fulfilled"){
 			toast.success('Login Successful!')
 			setIsModelOpen(false)
 		}else{
-			toast.error("Login Failed. Please Try again")
+			toast.error("Login Failed: " + login_res.payload.detail)
+			console.log("status:", login_res.payload.detail)
 		}
 		
 	}

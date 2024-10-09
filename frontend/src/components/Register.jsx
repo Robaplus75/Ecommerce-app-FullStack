@@ -17,11 +17,12 @@ export default function Register({setIsLogin, setIsModelOpen}){
 
 		if (formData.get("password") === formData.get("c_password")){
 			const response = await dispatch(signupUser(userData))
+			console.log("Response: ", response)
 			if (response.type === "SignupUser/fulfilled"){
 				toast.success('Registration Successful!')
 				setIsLogin(true)
 			}else{
-				toast.error("Registration Failed. Please Try again")
+				toast.error("Registration Failed: "+ ((response.payload.email)? response.payload.email : response.payload.detail))
 			}
 		}else{
 			toast.error("Passwords do not Match")
