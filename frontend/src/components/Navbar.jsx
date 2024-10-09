@@ -10,6 +10,8 @@ import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {setSearchTerm} from '../redux/productSlice'
 import {useNavigate} from 'react-router-dom'
+import {logout} from '../redux/userSlice'
+import toast from 'react-hot-toast'
 
 export default function Navbar(){
 	const products = useSelector((store)=>store.cart.products)
@@ -18,6 +20,7 @@ export default function Navbar(){
 	const [search, setSearch] = useState('')
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
+	const logged_user = useSelector(store=>store.user.logged_user)
 
 
 	const handleSearch = (e) =>{
@@ -25,6 +28,10 @@ export default function Navbar(){
 		dispatch(setSearchTerm(search))
 		navigate('/filter-data')
 
+	}
+	const handleLogout = () =>{
+		dispatch(logout())
+		toast.success("Logout Successful")
 	}
 
 	return (
@@ -46,12 +53,26 @@ export default function Navbar(){
 							<span className="absolute top-0 text-xs w-3 left-5 bg-red-600 rounded-full flex justify-center items-center text-white">{products.length}</span>
 						)}
 					</Link>
-					<button onClick={()=>setIsModelOpen(true)} className="hidden md:block">
-						Login | Register
-					</button>
-					<button onClick={()=>setIsModelOpen(true)} className="block md:hidden">
-						<User />
-					</button>
+					{
+						(logged_user)?
+						<div onClick={handleLogout}>
+							<div className="bg-red-600 p-2 rounded-lg text-white font-bold hidden md:block">
+								Logout {logged_user.first_name}
+							</div>
+							<button className="block md:hidden">
+								logout
+							</button>
+						</div>:
+						<div>
+							<button onClick={()=>setIsModelOpen(true)} className="hidden md:block">
+								Login | Register
+							</button>
+						
+							<button onClick={()=>setIsModelOpen(true)} className="block md:hidden">
+								<User />
+							</button>
+						</div>
+					}
 				</div>
 			</div>
 			<div className="flex items-center justify-center space-x-10 py-4 text-sm font-bold">
