@@ -14,7 +14,7 @@ export default function Home(){
 	const products = useSelector(state => state.product)
 
 	async function fetchProducts(){
-		const res = await dispatch(getProducts())
+		const res = await dispatch(setProducts(mockData))
 	}
 
 	useEffect(()=>{
