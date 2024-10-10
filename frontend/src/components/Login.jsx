@@ -20,7 +20,7 @@ export default function Login({setIsLogin, setIsModelOpen}){
 		console.log(userData)
 		const login_res =  await dispatch(loginUser(userData))
 		console.log("Login Response", login_res)
-		const user_res = await dispatch(getUser({"email": userData.email}))
+		const user_res = await dispatch(getUser())
 		console.log("User Response", user_res)
 		console.log("Logged User", logged_user)
 
