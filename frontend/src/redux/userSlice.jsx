@@ -28,7 +28,16 @@ export const signupUser = createAsyncThunk("SignupUser", async (userData, thunkA
 
 export const getUser = createAsyncThunk("GetUser", async (userData, thunkAPI)=>{
 	try{
-		const response = await api_auth.get("/accounts/"+userData.email)
+		const response = await api_auth.get("/accounts/me/")
+		return response.data
+	}catch(error){
+		return thunkAPI.rejectWithValue(error.response.data)
+	}
+})
+
+export const login_If_TokenPresent = createAsyncThunk("Login_If_TokenPresent", async (userData, thunkAPI)=>{
+	try{
+		const response = await api_auth.get("/accounts/me/")
 		return response.data
 	}catch(error){
 		return thunkAPI.rejectWithValue(error.response.data)
@@ -91,6 +100,20 @@ const userSlice = createSlice({
 		});
 		builder.addCase(getUser.rejected, (state, action)=>{
 			state.error = true
+			state.isLoading = false
+		});
+
+		// -----------Login_If_TokenPresent
+		builder.addCase(login_If_TokenPresent.pending, (state, action)=>{
+			state.isLoading = true
+		});
+		builder.addCase(login_If_TokenPresent.fulfilled, (state, action)=>{
+			state.logged_user = action.payload
+			state.isLoggedin = true
+			state.isLoading = false
+
+		});
+		builder.addCase(login_If_TokenPresent.rejected, (state, action)=>{
 			state.isLoading = false
 		});
 	}
