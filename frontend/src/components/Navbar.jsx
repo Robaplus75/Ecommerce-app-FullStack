@@ -6,16 +6,17 @@ import { useSelector } from 'react-redux';
 import Modal from './Modal'
 import Login from './Login'
 import Register from './Register'
+import Logout from './Logout'
 import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {setSearchTerm} from '../redux/productSlice'
 import {useNavigate} from 'react-router-dom'
-import {logout} from '../redux/userSlice'
 import toast from 'react-hot-toast'
 
 export default function Navbar(){
 	const products = useSelector((store)=>store.cart.products)
 	const [isModelOpen, setIsModelOpen] = useState(false)
+	const [isModel2Open, setIsModel2Open] = useState(false)
 	const [isLogin, setIsLogin] = useState(true)
 	const [search, setSearch] = useState('')
 	const dispatch = useDispatch()
@@ -29,10 +30,7 @@ export default function Navbar(){
 		navigate('/filter-data')
 
 	}
-	const handleLogout = () =>{
-		dispatch(logout())
-		toast.success("Logout Successful")
-	}
+	
 
 	return (
 		<nav className="bg-white-500 shadow-md">
@@ -55,7 +53,7 @@ export default function Navbar(){
 					</Link>
 					{
 						(logged_user)?
-						<div onClick={handleLogout}>
+						<div onClick={()=>setIsModel2Open(true)} className="cursor-pointer">
 							<div className="bg-red-600 p-2 rounded-lg text-white font-bold hidden md:block">
 								Logout {logged_user.first_name}
 							</div>
@@ -83,6 +81,9 @@ export default function Navbar(){
 			</div>
 			<Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen} >
 				{isLogin ? <Login setIsLogin={setIsLogin} /> : <Register  setIsLogin={setIsLogin}/>}
+			</Modal>
+			<Modal isModelOpen={isModel2Open} setIsModelOpen={setIsModel2Open} >
+				<Logout />
 			</Modal>
 		</nav>
 	)
