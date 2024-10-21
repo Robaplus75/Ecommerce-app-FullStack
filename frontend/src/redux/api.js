@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api_auth = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://shopping-hzm4.onrender.com/',
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 });
@@ -54,7 +54,7 @@ function isAccessTokenExpired(accessToken) {
 
 
 export const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://shopping-hzm4.onrender.com/',
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 });
