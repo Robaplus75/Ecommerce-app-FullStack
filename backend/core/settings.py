@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-^8=v&rodj20z*b+r&w%i@ohg7(c$c3)+!le8n5b&ww78uwuqn3'
-FRONTEND_URL = "http://localhost:5173"
+FRONTEND_URL = "https://ecommerce-app-full-stack.vercel.app"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
