@@ -5,3 +5,4 @@ urlpatterns = [
     path("products/", views.ProductListView.as_view()),
     path("products/create/", views.ProductCreateView.as_view()),
 ]
+#third task 
