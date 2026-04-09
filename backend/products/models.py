@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 
-# Create your models here.
+# Create your models here. model has been udpated
 class Product(models.Model):
 	id_uuid = models.UUIDField(primary_key=True, default=uuid.uuid4())
 	name = models.CharField(max_length=100)
