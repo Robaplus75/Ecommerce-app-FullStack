@@ -5,3 +5,6 @@ class ProductSerialzier(serializers.ModelSerializer):
 	class Meta():
 		model = Product
 		fields = ["id_uuid", "name", "price", "image"]
+  
+
+# robel was here
