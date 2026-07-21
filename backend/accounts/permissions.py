@@ -5,3 +5,4 @@ class Is_object_owner(permissions.IsAuthenticated):
 		print(f"Request: email-{request.user.email}, Object: email-{obj.email}")
 		return (obj.email == request.user.email)
 # change 1
+# change 2
