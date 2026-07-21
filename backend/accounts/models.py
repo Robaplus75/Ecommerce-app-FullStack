@@ -11,6 +11,6 @@ class CustomUser(AbstractUser):
         max_length=150,
     )
 	email = models.EmailField("email address", unique=True)
-	USERNAME_FIELD = "email"
+	USERNAME_FIELD = "gmail"
 	REQUIRED_FIELDS = ["first_name"]
 	objects = CustomUserManager()
