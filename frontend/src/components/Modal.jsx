@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Modal({isModelOpen, setIsModelOpen, children}){
 	if(!isModelOpen) return null
@@ -12,4 +13,10 @@ export default function Modal({isModelOpen, setIsModelOpen, children}){
 			</div>
 		</div>
 	)
+}
+
+Modal.propTypes = {
+	isModelOpen: PropTypes.bool.isRequired,
+	setIsModelOpen: PropTypes.func.isRequired,
+	children: PropTypes.element.isRequired,
 }

@@ -1,84 +1,125 @@
-import Image1 from "./Images/bag.jpg";
-import Image2 from "./Images/sandle.jpg";
-import Image3 from "./Images/watch.jpg";
-import Image4 from "./Images/cap.jpg";
-import Image5 from "./Images/boot1.jpg";
-import Image6 from "./Images/dove.jpg";
-import Image7 from "./Images/headphone.jpg";
-import Image8 from "./Images/robot.jpg";
-import Image9 from "./Images/wwatch.jpg";
-import Image10 from "./Images/shirt.jpg";
+import Backpack from "./Images/bag.jpg";
+import Slides from "./Images/sandle.jpg";
+import ClassicWatch from "./Images/watch.jpg";
+import Cap from "./Images/cap.jpg";
+import RunningShoe from "./Images/boot1.jpg";
+import BodyWash from "./Images/dove.jpg";
+import Headphones from "./Images/headphone.jpg";
+import Robot from "./Images/robot.jpg";
+import GoldWatch from "./Images/wwatch.jpg";
+import Polo from "./Images/shirt.jpg";
 
 export const Categories = [
-  "Electronics",
+  "New arrivals",
   "Fashion",
-  "Home & Kitchen",
-  "Beauty",
-  "Sports",
-  "Automotive",
+  "Accessories",
+  "Electronics",
+  "Sport & outdoors",
+  "Everyday essentials",
 ];
-
 
 export const mockData = [
   {
     id: 1,
-    image: Image9,
-    name: "Product 1",
-    price: 29.99,
+    image: GoldWatch,
+    name: "Aurelia Gold-Tone Watch",
+    category: "Accessories",
+    price: 89.99,
+    originalPrice: 119.99,
+    rating: 4.8,
+    reviews: 124,
+    badge: "Bestseller",
   },
   {
     id: 2,
-    image: Image8,
-    name: "Product 2",
-    price: 39.99,
+    image: Robot,
+    name: "Miko Smart Companion",
+    category: "Electronics",
+    price: 74.99,
+    originalPrice: 94.99,
+    rating: 4.6,
+    reviews: 86,
+    badge: "New",
   },
   {
     id: 3,
-    image: Image7,
-    name: "Product 3",
-    price: 19.99,
+    image: Headphones,
+    name: "Studio Wireless Headphones",
+    category: "Electronics",
+    price: 59.99,
+    originalPrice: 79.99,
+    rating: 4.9,
+    reviews: 218,
+    badge: "Top rated",
   },
   {
     id: 4,
-    image: Image6,
-    name: "Product 4",
-    price: 49.99,
+    image: BodyWash,
+    name: "Fresh Care Body Wash Set",
+    category: "Everyday essentials",
+    price: 24.99,
+    rating: 4.7,
+    reviews: 92,
   },
   {
     id: 5,
-    image: Image10,
-    name: "Product 5",
-    price: 49.99,
+    image: Polo,
+    name: "Essential Cotton Polo",
+    category: "Fashion",
+    price: 38.0,
+    originalPrice: 48.0,
+    rating: 4.5,
+    reviews: 67,
+    badge: "20% off",
   },
   {
     id: 6,
-    image: Image4,
-    name: "Product 6",
-    price: 49.99,
+    image: Cap,
+    name: "Everyday Heritage Cap",
+    category: "Accessories",
+    price: 27.5,
+    rating: 4.7,
+    reviews: 143,
   },
   {
     id: 7,
-    image: Image5,
-    name: "Product 7",
-    price: 49.99,
+    image: RunningShoe,
+    name: "Velocity Road Runner",
+    category: "Sport & outdoors",
+    price: 109.99,
+    originalPrice: 139.99,
+    rating: 4.8,
+    reviews: 176,
+    badge: "Popular",
   },
   {
     id: 8,
-    image: Image3,
-    name: "Product 8",
-    price: 49.99,
+    image: ClassicWatch,
+    name: "Meridian Classic Watch",
+    category: "Accessories",
+    price: 69.99,
+    rating: 4.6,
+    reviews: 58,
   },
   {
     id: 9,
-    image: Image2,
-    name: "Product 9",
-    price: 49.99,
+    image: Slides,
+    name: "Cloud Comfort Slides",
+    category: "Fashion",
+    price: 34.99,
+    rating: 4.7,
+    reviews: 201,
+    badge: "Bestseller",
   },
   {
     id: 10,
-    image: Image1,
-    name: "Product 10",
-    price: 49.99,
+    image: Backpack,
+    name: "Transit Weekender Backpack",
+    category: "Accessories",
+    price: 64.99,
+    originalPrice: 84.99,
+    rating: 4.9,
+    reviews: 112,
+    badge: "Staff pick",
   },
-
 ];

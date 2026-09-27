@@ -1,90 +1,108 @@
-import {Link} from 'react-router-dom';
-import { Search } from 'lucide-react';
-import { ShoppingCart } from 'lucide-react';
-import { User } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import Modal from './Modal'
-import Login from './Login'
-import Register from './Register'
-import Logout from './Logout'
 import { useState } from 'react'
-import {useDispatch} from 'react-redux'
-import {setSearchTerm} from '../redux/productSlice'
-import {useNavigate} from 'react-router-dom'
-import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react'
+import { setSearchTerm } from '../redux/productSlice'
+import Login from './Login'
+import Logout from './Logout'
+import Modal from './Modal'
+import Register from './Register'
 
-export default function Navbar(){
-	const products = useSelector((store)=>store.cart.products)
-	const [isModelOpen, setIsModelOpen] = useState(false)
-	const [isModel2Open, setIsModel2Open] = useState(false)
-	const [isLogin, setIsLogin] = useState(true)
-	const [search, setSearch] = useState('')
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-	const logged_user = useSelector(store=>store.user.logged_user)
+const navItems = [
+  { label: 'Home', to: '/' },
+  { label: 'Shop', to: '/shop' },
+  { label: 'Collections', href: '/#collections' },
+  { label: 'Our story', href: '/#about' },
+]
 
+export default function Navbar() {
+  const totalQuantity = useSelector((store) => store.cart.totalQuantity)
+  const loggedUser = useSelector((store) => store.user.logged_user)
+  const [isAuthOpen, setIsAuthOpen] = useState(false)
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-	const handleSearch = (e) =>{
-		e.preventDefault()
-		dispatch(setSearchTerm(search))
-		navigate('/filter-data')
+  const handleSearch = (event) => {
+    event.preventDefault()
+    if (!search.trim()) return
+    dispatch(setSearchTerm(search.trim()))
+    navigate('/filter-data')
+    setIsMenuOpen(false)
+  }
 
-	}
-	
+  return (
+    <header className="store-header">
+      <div className="announcement-bar">
+        <p>Complimentary delivery on orders over $75</p>
+        <span>Easy 30-day returns</span>
+      </div>
 
-	return (
-		<nav className="bg-white-500 shadow-md">
-			<div className="container px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
-				<div className="text-lg font-bold">
-					<Link to="/">e-SHOP</Link>
-				</div>
-				<div className="relative flex-1 mx-4">
-					<form onSubmit={handleSearch}>
-						<input type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Search Product" className="w-full border py-2 px-4"/>
-						<Search className="absolute top-3 right-3 text-red-500" />
-					</form>
-				</div>
-				<div className="flex items-center space-x-4">
-					<Link to="/cart" className="relative">
-						<ShoppingCart className="text-lg"/>
-						{products.length > 0 && (
-							<span className="absolute top-0 text-xs w-3 left-5 bg-red-600 rounded-full flex justify-center items-center text-white">{products.length}</span>
-						)}
-					</Link>
-					{
-						(logged_user)?
-						<div onClick={()=>setIsModel2Open(true)} className="cursor-pointer">
-							<div className="bg-red-600 p-2 rounded-lg text-white font-bold hidden md:block">
-								Logout {logged_user.first_name}
-							</div>
-							<button className="block md:hidden">
-								logout
-							</button>
-						</div>:
-						<div>
-							<button onClick={()=>setIsModelOpen(true)} className="hidden md:block">
-								Login | Register
-							</button>
-						
-							<button onClick={()=>setIsModelOpen(true)} className="block md:hidden">
-								<User />
-							</button>
-						</div>
-					}
-				</div>
-			</div>
-			<div className="flex items-center justify-center space-x-10 py-4 text-sm font-bold">
-				<Link to="/" className="hover:underline">Home</Link>
-				<Link to="/shop" className="hover:underline">Shop</Link>
-				<Link to="/" className="hover:underline">Contact</Link>
-				<Link to="/" className="hover:underline">About</Link>
-			</div>
-			<Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen} >
-				{isLogin ? <Login setIsLogin={setIsLogin} /> : <Register  setIsLogin={setIsLogin}/>}
-			</Modal>
-			<Modal isModelOpen={isModel2Open} setIsModelOpen={setIsModel2Open} >
-				<Logout />
-			</Modal>
-		</nav>
-	)
+      <div className="site-shell nav-main">
+        <button className="mobile-menu-button" type="button" onClick={() => setIsMenuOpen((open) => !open)} aria-expanded={isMenuOpen} aria-controls="mobile-navigation" aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}>
+          {isMenuOpen ? <X size={21} /> : <Menu size={21} />}
+        </button>
+
+        <Link className="store-logo" to="/" aria-label="eShop home">e<span>/</span>shop</Link>
+
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {navItems.map((item) => item.to ? (
+            <Link key={item.label} to={item.to}>{item.label}</Link>
+          ) : (
+            <a key={item.label} href={item.href}>{item.label}</a>
+          ))}
+        </nav>
+
+        <div className="nav-actions">
+          <form className="nav-search" onSubmit={handleSearch}>
+            <label className="sr-only" htmlFor="desktop-search">Search products</label>
+            <input id="desktop-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search the edit" />
+            <button type="submit" aria-label="Search"><Search size={18} /></button>
+          </form>
+
+          {loggedUser ? (
+            <button className="account-button" type="button" onClick={() => setIsLogoutOpen(true)}>
+              <span className="account-avatar">{loggedUser.first_name?.[0] || 'U'}</span>
+              <span>{loggedUser.first_name || 'Account'}</span>
+            </button>
+          ) : (
+            <button className="account-button" type="button" onClick={() => setIsAuthOpen(true)}>
+              <UserRound size={19} /><span>Sign in</span>
+            </button>
+          )}
+
+          <Link className="cart-button" to="/cart" aria-label={`Shopping bag with ${totalQuantity} items`}>
+            <ShoppingBag size={21} />
+            {totalQuantity > 0 && <span>{totalQuantity}</span>}
+          </Link>
+        </div>
+      </div>
+
+      <div id="mobile-navigation" className={`mobile-navigation ${isMenuOpen ? 'open' : ''}`}>
+        <form className="mobile-search" onSubmit={handleSearch}>
+          <Search size={17} />
+          <label className="sr-only" htmlFor="mobile-search">Search products</label>
+          <input id="mobile-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search products" />
+        </form>
+        <nav aria-label="Mobile navigation">
+          {navItems.map((item) => item.to ? (
+            <Link key={item.label} to={item.to} onClick={() => setIsMenuOpen(false)}>{item.label}</Link>
+          ) : (
+            <a key={item.label} href={item.href} onClick={() => setIsMenuOpen(false)}>{item.label}</a>
+          ))}
+        </nav>
+        {!loggedUser && <button type="button" onClick={() => { setIsAuthOpen(true); setIsMenuOpen(false) }}>Sign in or create an account</button>}
+      </div>
+
+      <Modal isModelOpen={isAuthOpen} setIsModelOpen={setIsAuthOpen}>
+        {isLogin ? <Login setIsLogin={setIsLogin} /> : <Register setIsLogin={setIsLogin} />}
+      </Modal>
+      <Modal isModelOpen={isLogoutOpen} setIsModelOpen={setIsLogoutOpen}>
+        <Logout />
+      </Modal>
+    </header>
+  )
 }

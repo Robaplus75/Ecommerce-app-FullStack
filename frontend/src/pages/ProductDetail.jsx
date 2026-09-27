@@ -8,14 +8,9 @@ export default function ProductDetail(){
 	const products = useSelector(store=>store.product.products)
 	const [product, setProduct] = useState(null)
 
-	const getproducts = ()=>{
-		const newProduct = products.find((product)=>product.id===Number(id))
-		setProduct(newProduct)
-	}
-	
 	useEffect(()=>{
-		getproducts()
-	},[])
+		setProduct(products.find((item)=>item.id===Number(id)))
+	},[id, products])
 	
 	if (!product) return <div>Loading...</div>;
 	return (

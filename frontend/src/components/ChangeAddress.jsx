@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import PropTypes from 'prop-types'
 
 export default function ChangeAddress({setIsModelOpen, setAddress}){
 	const [newAddress, setNewAddress] = useState("")	
@@ -16,4 +17,9 @@ export default function ChangeAddress({setIsModelOpen, setAddress}){
 			</div>
 		</div>
 	)
+}
+
+ChangeAddress.propTypes = {
+	setIsModelOpen: PropTypes.func.isRequired,
+	setAddress: PropTypes.func.isRequired,
 }

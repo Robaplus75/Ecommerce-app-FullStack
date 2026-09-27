@@ -1,54 +1,46 @@
-import {Link} from 'react-router-dom'
-import {FaGithub, FaTwitter, FaFacebook, FaLinkedin}  from 'react-icons/fa'
+import { Github, Instagram, Linkedin } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-export default function Footer(){
-	return (
-		<footer className="bg-gray-800 text-white py-8 px-4 md:px-16 lg:px-24">
-			<div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-				<div>
-					<h3 className="text-xl font-semibold">e-Shop</h3>
-					<p className="mt-4">your one-step for all your needs. Shop with use and experience the best online shopping experience</p>
-				</div>
-				<div className="flex flex-col md:items-center">
-					<h4 className="text-lg font-semibold">Quick Links</h4>
-					<ul className="mt-4 space-y-2">
-						<li>
-							<Link to='/' className="hover:underline">Home</Link>
-						</li>
-						<li>
-							<Link to='/shop' className="hover:underline">Shop</Link>
-						</li>
-						<li>
-							<Link to='/contact' className="hover:underline">Contact</Link>
-						</li>
-						<li>
-							<Link to='/about' className="hover:underline">About</Link>
-						</li>
-					</ul>
-				</div>
-				<div className="">
-					<h4 className="text-lg font-semibold">Follow us</h4>
-					<div className="flex space-x-4 mt-4">
-						<a href="" className="hover:text-gray-400"><FaFacebook /></a>
-						<a href="" className="hover:text-gray-400"><FaTwitter /></a>
-						<a href="" className="hover:text-gray-400"><FaGithub /></a>
-						<a href="" className="hover:text-gray-400"><FaLinkedin /></a>
-					</div>
-					<form className="flex items-center justify-center mt-8">
-						<input className="w-full p-2 rounded-l-lg bg-gray-800 border border-gray-600" type="email" />
-						<button className="text-white px-4 py-2 rounded-r-lg bg-red-600 border border-gray-600">Subscribe</button>
-					</form>
-				</div>
-			</div>
-			<div className="mt-8 border-t border-gray-700 pt-4">
-				<div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-					<p>&copy; 2024 e-shop All rights reserved</p>
-					<div className="flex space-x-4 mt-4 md:mt-0">
-						<a href="" className="hover:underline">Privacy Policy</a>
-						<a href="" className="hover:underline">Terms & Conditions</a>
-					</div>
-				</div>
-			</div>
-		</footer>
-	)
+export default function Footer() {
+  return (
+    <footer className="store-footer">
+      <div className="site-shell footer-grid">
+        <div className="footer-brand">
+          <Link className="store-logo light" to="/">e<span>/</span>shop</Link>
+          <p>Useful things, expressive details, and a simpler way to discover what belongs in your everyday.</p>
+          <div className="social-links">
+            <a href="https://github.com/Robaplus75" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a>
+            <a href="#" aria-label="Instagram"><Instagram size={17} /></a>
+            <a href="#" aria-label="LinkedIn"><Linkedin size={17} /></a>
+          </div>
+        </div>
+
+        <div className="footer-links">
+          <p>Explore</p>
+          <Link to="/shop">Shop all</Link>
+          <a href="/#collections">Collections</a>
+          <a href="/#about">Our story</a>
+          <Link to="/cart">Shopping bag</Link>
+        </div>
+
+        <div className="footer-links">
+          <p>Customer care</p>
+          <a href="mailto:support@eshop.example">Contact us</a>
+          <a href="#">Delivery & returns</a>
+          <a href="#">Size guide</a>
+          <a href="#">Frequently asked</a>
+        </div>
+
+        <div className="footer-note">
+          <p>Need a hand?</p>
+          <strong>We are here Monday-Friday, 9-5.</strong>
+          <a href="mailto:support@eshop.example">support@eshop.example</a>
+        </div>
+      </div>
+      <div className="site-shell footer-bottom">
+        <span>© {new Date().getFullYear()} eShop. All rights reserved.</span>
+        <div><a href="#">Privacy</a><a href="#">Terms</a><span>USD / EN</span></div>
+      </div>
+    </footer>
+  )
 }

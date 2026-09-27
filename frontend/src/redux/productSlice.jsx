@@ -27,7 +27,7 @@ const productSlice = createSlice({
 		}
 	},
 	extraReducers: (builder)=>{
-		builder.addCase(getProducts.pending, (state, action)=>{
+		builder.addCase(getProducts.pending, (state)=>{
 			state.isLoading = true
 		});
 		builder.addCase(getProducts.fulfilled, (state, action)=>{
@@ -35,7 +35,7 @@ const productSlice = createSlice({
 			console.log(action.payload)
 			state.isLoading = false
 		});
-		builder.addCase(getProducts.rejected, (state, action)=>{
+		builder.addCase(getProducts.rejected, (state)=>{
 			state.isLoading = false
 		});
 	}

@@ -1,8 +1,9 @@
 import {useDispatch} from "react-redux"
 import {logout} from '../redux/userSlice'
 import toast from 'react-hot-toast'
+import PropTypes from 'prop-types'
 
-export default function Logout({isModelOpen,setIsModelOpen}){
+export default function Logout({setIsModelOpen}){
 	const dispatch = useDispatch()
 
 	const handleLogout = () =>{
@@ -21,4 +22,8 @@ export default function Logout({isModelOpen,setIsModelOpen}){
 				</div>
 		</div>
 	)
+}
+
+Logout.propTypes = {
+	setIsModelOpen: PropTypes.func.isRequired,
 }

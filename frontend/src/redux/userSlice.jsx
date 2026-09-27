@@ -48,7 +48,7 @@ const userSlice = createSlice({
 	name: "User",
 	initialState,
 	reducers: {
-		logout(state, action){
+		logout(state){
 			state.isLoggedin = false
 			state.logged_user = null
 			localStorage.setItem('auth_tokens', '')
@@ -57,7 +57,7 @@ const userSlice = createSlice({
 	extraReducers: (builder)=>{
 
 		// ----------Login User
-		builder.addCase(loginUser.pending, (state, action)=>{
+		builder.addCase(loginUser.pending, (state)=>{
 			state.isLoading = true
 		});
 		builder.addCase(loginUser.fulfilled, (state, action)=>{
@@ -75,21 +75,21 @@ const userSlice = createSlice({
 
 
 		// --------signup User
-		builder.addCase(signupUser.pending, (state, action)=>{
+		builder.addCase(signupUser.pending, (state)=>{
 			state.isLoading = true
 		});
-		builder.addCase(signupUser.fulfilled, (state, action)=>{
+		builder.addCase(signupUser.fulfilled, (state)=>{
 			state.isLoading = false
 			state.error = false
 		});
-		builder.addCase(signupUser.rejected, (state, action)=>{
+		builder.addCase(signupUser.rejected, (state)=>{
 			state.error = true
 			state.isLoading = false
 		});
 
 
 		// -----------GetUser
-		builder.addCase(getUser.pending, (state, action)=>{
+		builder.addCase(getUser.pending, (state)=>{
 			state.isLoading = true
 		});
 		builder.addCase(getUser.fulfilled, (state, action)=>{
@@ -98,13 +98,13 @@ const userSlice = createSlice({
 			state.error = false
 
 		});
-		builder.addCase(getUser.rejected, (state, action)=>{
+		builder.addCase(getUser.rejected, (state)=>{
 			state.error = true
 			state.isLoading = false
 		});
 
 		// -----------Login_If_TokenPresent
-		builder.addCase(login_If_TokenPresent.pending, (state, action)=>{
+		builder.addCase(login_If_TokenPresent.pending, (state)=>{
 			state.isLoading = true
 		});
 		builder.addCase(login_If_TokenPresent.fulfilled, (state, action)=>{
@@ -113,7 +113,7 @@ const userSlice = createSlice({
 			state.isLoading = false
 
 		});
-		builder.addCase(login_If_TokenPresent.rejected, (state, action)=>{
+		builder.addCase(login_If_TokenPresent.rejected, (state)=>{
 			state.isLoading = false
 		});
 	}

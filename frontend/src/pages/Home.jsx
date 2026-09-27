@@ -1,64 +1,158 @@
-import {Categories} from '../assets/mockData'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { ArrowRight, BadgeCheck, Play, Sparkles, Star } from 'lucide-react'
 import HeroImage from '../assets/Images/hero-page.png'
-import InfoSection from '../components/infoSection'
+import Headphones from '../assets/Images/headphone.jpg'
+import Backpack from '../assets/Images/bag.jpg'
+import { mockData } from '../assets/mockData'
+import { setProducts } from '../redux/productSlice'
 import CategorySection from '../components/CategorySection'
-import {setProducts, getProducts} from '../redux/productSlice'
-import {useSelector, useDispatch} from 'react-redux'
-import {useEffect} from 'react'
-import {mockData} from '../assets/mockData'
+import InfoSection from '../components/infoSection'
 import ProductCard from '../components/ProductCard'
-import Shop from './Shop'
 
-export default function Home(){
-	const dispatch = useDispatch()
-	const products = useSelector(state => state.product)
+export default function Home() {
+  const dispatch = useDispatch()
+  const storedProducts = useSelector((state) => state.product.products)
+  const products = storedProducts.length ? storedProducts : mockData
 
-	async function fetchProducts(){
-		const res = await dispatch(setProducts(mockData))
-	}
+  useEffect(() => {
+    dispatch(setProducts(mockData))
+  }, [dispatch])
 
-	useEffect(()=>{
-		fetchProducts()
-	},[])
+  return (
+    <main className="home-page">
+      <section className="site-shell pt-5 sm:pt-8">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <div>
+              <p className="section-kicker text-[#d94f2b]">
+                <Sparkles size={15} aria-hidden="true" /> The autumn edit is here
+              </p>
+              <h1>Good finds.<br /><span>Better days.</span></h1>
+              <p className="hero-description">
+                Thoughtful everyday pieces, expressive essentials, and useful tech selected to make daily life feel a little more considered.
+              </p>
+              <div className="hero-actions">
+                <Link className="primary-button" to="/shop">
+                  Shop the edit <ArrowRight size={17} aria-hidden="true" />
+                </Link>
+                <a className="text-link" href="#collections">
+                  <Play size={15} fill="currentColor" aria-hidden="true" /> Explore collections
+                </a>
+              </div>
+            </div>
 
-	return (
-		<div>
-			<div className="bg-white mt-2 px-4 md:px-16 lg:px-24">
-				<div className="container mx-auto py-4 flex flex-col md:flex-row md:space-x-2">
-						<div className="w-full md:w-3/12">
-							<div className="bg-red-600 text-white text-xs font-bold px-2 py-2.5">SHOP BY CATEGORIES</div>
-							<ul className="space-y-4 bg-gray-100 p-3 border">
-								{Categories.map((category, index)=>(
-									<li key={index} className="flex items-center text-sm font-medium">
-										<div className="w-2 h-2 border border-red-500 rounded-full mr-2"></div>
-										{category}
-									</li>
-								))}
-							</ul>
-						</div>
-						<div className="w-full md:w-9/12 mt-8 md:mt-0 h-96 relative">
-							{/*<img src={HeroImage} className="h-full w-full" />*/}
-							<img src={HeroImage} className="h-full w-full" />
-							<div className="absolute top-16 left-8">
-								<p className="text-gray-600 mb-4">Robel | e-shop</p>
-								<h2 className="text-3xl font-bold">WELCOME TO E-SHOP</h2>
-								<p className="text-xl mt-2.5 font-bold text-gray-800">MILLIONS+ PRODUCTS</p>
-								<button className="bg-red-600 px-8 py-1.5 text-white mt-4 hover:bg-red-700 transform transition-transform duration-300 hover:scale-105">SHOP NOW</button>
-							</div>
-						</div>
-				</div>
-				<InfoSection />
-				<CategorySection />
-				<div className="container mx-auto py-12">
-					<h2 className="text-2xl font-bold mb-6 text-center">Top Products</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-						{products.products.slice(0,5).map((product,index)=>(
-							<ProductCard product={product} />
-						))}
-					</div>
-				</div>
-			</div>
-			<Shop />
-		</div>
-		)
+            <div className="hero-proof">
+              <div className="customer-stack" aria-hidden="true">
+                <span>AM</span><span>RK</span><span>JW</span>
+              </div>
+              <div>
+                <div className="rating-row"><Star size={13} fill="currentColor" /> 4.8/5</div>
+                <p>Loved by 2,400+ happy shoppers</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <img src={HeroImage} alt="Shopper carrying colorful bags beside a full shopping cart" fetchPriority="high" />
+            <div className="hero-note">
+              <span>Fresh drop</span>
+              <strong>Up to 30% off selected pieces</strong>
+            </div>
+            <div className="hero-index" aria-hidden="true">01 / 04</div>
+          </div>
+        </div>
+      </section>
+
+      <InfoSection />
+
+      <section id="collections" className="site-shell section-space">
+        <div className="section-heading-row">
+          <div>
+            <p className="section-kicker">Shop your way</p>
+            <h2>Made for every version of you.</h2>
+          </div>
+          <Link className="arrow-link" to="/shop">View all collections <ArrowRight size={16} /></Link>
+        </div>
+        <CategorySection />
+      </section>
+
+      <section className="site-shell pb-20 sm:pb-28">
+        <div className="section-heading-row product-heading">
+          <div>
+            <p className="section-kicker">Customer favorites</p>
+            <h2>The pieces people keep talking about.</h2>
+          </div>
+          <div className="review-summary">
+            <span><Star size={14} fill="currentColor" /> 4.8</span>
+            <p>Average across 1,200+ verified reviews</p>
+          </div>
+        </div>
+        <div className="product-grid">
+          {products.slice(0, 5).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="site-shell pb-20 sm:pb-28">
+        <div className="editorial-banner">
+          <div className="editorial-copy">
+            <p className="section-kicker text-[#ffb49f]">Sound, uninterrupted</p>
+            <h2>Turn down the noise.<br />Keep what matters.</h2>
+            <p>All-day comfort, rich sound, and a design that moves easily from focused work to the walk home.</p>
+            <div>
+              <Link className="light-button" to="/product/3">Discover the headphones <ArrowRight size={16} /></Link>
+              <span className="editorial-price">From $59.99</span>
+            </div>
+          </div>
+          <div className="editorial-image">
+            <span className="floating-label">4.9 rated</span>
+            <img src={Headphones} alt="Blue and teal studio headphones" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section className="site-shell pb-20 sm:pb-28">
+        <div className="discovery-grid">
+          <article className="discovery-story" id="about">
+            <p className="section-kicker">Why eShop</p>
+            <h2>Less scrolling.<br />More worth finding.</h2>
+            <p>We bring together practical products and expressive details, making it easier to discover things that earn their place in your routine.</p>
+            <ul>
+              <li><BadgeCheck size={18} /> Clear pricing, no surprise fees</li>
+              <li><BadgeCheck size={18} /> Products selected for quality and usefulness</li>
+              <li><BadgeCheck size={18} /> Support before and after your order</li>
+            </ul>
+            <Link className="arrow-link" to="/shop">Start exploring <ArrowRight size={16} /></Link>
+          </article>
+
+          <article className="discovery-product">
+            <div className="discovery-product-copy">
+              <span>Staff pick / 010</span>
+              <h3>Transit Weekender</h3>
+              <p>One bag for the office, the airport, and everywhere between.</p>
+              <Link to="/product/10">Shop now <ArrowRight size={15} /></Link>
+            </div>
+            <img src={Backpack} alt="Black travel backpack" loading="lazy" />
+          </article>
+        </div>
+      </section>
+
+      <section className="newsletter-wrap">
+        <div className="site-shell newsletter-inner">
+          <div>
+            <p className="section-kicker text-[#d94f2b]">A better inbox</p>
+            <h2>New finds, useful notes, no clutter.</h2>
+          </div>
+          <form className="newsletter-form" onSubmit={(event) => event.preventDefault()}>
+            <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+            <input id="newsletter-email" type="email" placeholder="Email address" required />
+            <button type="submit">Join the list <ArrowRight size={16} /></button>
+          </form>
+        </div>
+      </section>
+    </main>
+  )
 }

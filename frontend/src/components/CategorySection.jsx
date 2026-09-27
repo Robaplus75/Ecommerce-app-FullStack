@@ -1,34 +1,44 @@
-import ManCategory from '../assets/Images/man.png'
-import WomanCategory from '../assets/Images/woman.png'
-import KidCategory from '../assets/Images/kid.png'
+import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import MenImage from '../assets/Images/man.png'
+import WomenImage from '../assets/Images/woman.png'
+import KidsImage from '../assets/Images/kid.png'
 
-export default function CategorySection(){
-	const categories = [
-			{
-				title: 'Men',
-				imageUrl: ManCategory,
-			},
-			{
-				title: 'Women',
-				imageUrl: WomanCategory,
-			},
-			{
-				title: 'Kids',
-				imageUrl: KidCategory,
-			},
+const categories = [
+  {
+    title: 'For him',
+    subtitle: 'Everyday layers and practical details',
+    image: MenImage,
+    tone: 'sky',
+  },
+  {
+    title: 'For her',
+    subtitle: 'Easy statements for every kind of day',
+    image: WomenImage,
+    tone: 'butter',
+  },
+  {
+    title: 'For kids',
+    subtitle: 'Color, comfort, and room to move',
+    image: KidsImage,
+    tone: 'rose',
+  },
+]
 
-		]
-	return (
-			<div className="container mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
-				{categories.map((category, index)=>(
-					<div key={index} className="relative h-64 cursor-pointer transform hover:scale-105 trasition-transform duration-300">
-						<img src={category.imageUrl} alt="" className="w-full h-full object-cover rounded-lg shadow-md"/>
-						<div className="absolute top-20 left-12">
-							<p className="text-xl font-bold">{category.title}</p>
-							<p className="text-gray-600">View All</p>
-						</div>
-					</div>
-				))}
-			</div>
-		)
+export default function CategorySection() {
+  return (
+    <div className="collection-grid">
+      {categories.map((category, index) => (
+        <Link key={category.title} className={`collection-card ${category.tone}`} to="/shop">
+          <span className="collection-index">0{index + 1}</span>
+          <div>
+            <p>{category.subtitle}</p>
+            <h3>{category.title}</h3>
+            <span className="collection-link">Explore edit <ArrowUpRight size={15} /></span>
+          </div>
+          <img src={category.image} alt={`${category.title} collection`} loading="lazy" />
+        </Link>
+      ))}
+    </div>
+  )
 }

@@ -1,15 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {loginUser, getUser} from "../redux/userSlice"
-import {useState} from 'react'
+import PropTypes from 'prop-types'
 import toast from 'react-hot-toast'
 
 
 export default function Login({setIsLogin, setIsModelOpen}){
 	const dispatch = useDispatch()
 	const isLoading = useSelector(store=>store.user.isLoading)
-	const logged_user = useSelector(store=>store.user.logged_user)
-
-
 	async function handleSubmit(e){
 		e.preventDefault()
 		const formData = new FormData(e.target)
@@ -17,14 +14,10 @@ export default function Login({setIsLogin, setIsModelOpen}){
 			email: formData.get("email"),
 			password: formData.get("password")
 		}
-		console.log(userData)
 		const login_res =  await dispatch(loginUser(userData))
-		console.log("Login Response", login_res)
-		const user_res = await dispatch(getUser())
-		console.log("User Response", user_res)
-		console.log("Logged User", logged_user)
 
 		if (login_res.type === "LoginUser/fulfilled"){
+			await dispatch(getUser())
 			toast.success('Login Successful!')
 			setIsModelOpen(false)
 		}else{
@@ -63,9 +56,14 @@ export default function Login({setIsLogin, setIsModelOpen}){
 				</div>
 			</form>
 			<div className="text-center">
-				<span className="text-gray-700">Don't Have an Account?</span>
+				<span className="text-gray-700">Don&apos;t Have an Account?</span>
 				<button onClick={()=>setIsLogin(false)} className="text-red-800">Sign Up</button>
 			</div>
 		</div>
 	)
+}
+
+Login.propTypes = {
+	setIsLogin: PropTypes.func.isRequired,
+	setIsModelOpen: PropTypes.func.isRequired,
 }

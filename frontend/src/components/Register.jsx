@@ -1,8 +1,9 @@
 import toast from 'react-hot-toast'
 import {useDispatch, useSelector} from 'react-redux'
 import {signupUser} from '../redux/userSlice'
+import PropTypes from 'prop-types'
 
-export default function Register({setIsLogin, setIsModelOpen}){
+export default function Register({setIsLogin}){
 	const dispatch = useDispatch()
 	const isLoading = useSelector(store=>store.user.isLoading)
 
@@ -61,4 +62,8 @@ export default function Register({setIsLogin, setIsModelOpen}){
 			</div>
 		</div>
 	)
+}
+
+Register.propTypes = {
+	setIsLogin: PropTypes.func.isRequired,
 }
